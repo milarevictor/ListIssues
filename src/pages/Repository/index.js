@@ -59,6 +59,24 @@ export default class Repository extends Component {
     });
   }
 
+  handleFilter = async (e, state) => {
+    e.preventDefault();
+    this.setState({
+      filters: { state, page: 1 },
+    });
+    this.execApiCall();
+  };
+
+  async handlePage(e, page) {
+    e.preventDefault();
+    const { filters } = this.state;
+    const operator = page === 'next' ? 1 : -1;
+    this.setState({
+      filters: { state: filters.state, page: filters.page + operator },
+    });
+    this.execApiCall();
+  }
+
   async execApiCall() {
     const { repository, filters } = this.state;
     const issues = await api.get(`/repos/${repository.full_name}/issues`, {
@@ -71,23 +89,6 @@ export default class Repository extends Component {
       },
     });
     this.setState({ issues: issues.data });
-  }
-
-  async handlePage(page) {
-    const { filters } = this.state;
-    const operator = page === 'next' ? 1 : -1;
-    this.setState({
-      filters: { state: filters.state, page: filters.page + operator },
-    });
-    this.execApiCall();
-  }
-
-  async handleFilter(state) {
-    const { filters } = this.state;
-    this.setState({
-      filters: { state, page: 1 },
-    });
-    this.execApiCall();
   }
 
   render() {
@@ -112,24 +113,24 @@ export default class Repository extends Component {
           <IssueFilter>
             <p> State:</p>
             <FilterButton
-              onClick={() => {
-                this.handleFilter('open');
+              onClick={e => {
+                this.handleFilter(e, 'open');
               }}
               disabled={filters.state === 'open'}
             >
               Open
             </FilterButton>
             <FilterButton
-              onClick={() => {
-                this.handleFilter('closed');
+              onClick={e => {
+                this.handleFilter(e, 'closed');
               }}
               disabled={filters.state === 'closed'}
             >
               Closed
             </FilterButton>
             <FilterButton
-              onClick={() => {
-                this.handleFilter('all');
+              onClick={e => {
+                this.handleFilter(e, 'all');
               }}
               disabled={filters.state === 'all'}
             >
@@ -155,16 +156,16 @@ export default class Repository extends Component {
         <Footer>
           <FilterButton
             disabled={filters.page === 1}
-            onClick={() => {
-              this.handlePage('prev');
+            onClick={e => {
+              this.handlePage(e, 'prev');
             }}
           >
             Previous
           </FilterButton>
           <strong>{filters.page}</strong>
           <FilterButton
-            onClick={() => {
-              this.handlePage('next');
+            onClick={e => {
+              this.handlePage(e, 'next');
             }}
           >
             Next

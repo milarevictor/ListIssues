@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   max-width: 700px;
-  background-color: #c5c6c7;
+  background-color: #fff;
   border-radius: 4px;
   color: #1f2833;
   box-shadow: 0 0 20 rgba(0, 0, 0, 0.1);

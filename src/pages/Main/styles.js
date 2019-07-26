@@ -5,9 +5,9 @@ export const Form = styled.form`
   display: flex;
   input {
     flex: 1;
-    background-color: #0b0c10;
-    color: #66fcf1;
-    border: ${props => (props.error ? '1px solid #ff6b6b' : '0')};
+    background-color: #fff;
+    /* color: #66fcf1; */
+    border: ${props => (props.error ? '1px solid #ff6b6b' : '1px solid #eee')};
     padding: 10px 15px;
     border-radius: 4px;
     font-size: 16px;
@@ -24,12 +24,12 @@ export const SubmitButton = styled.button.attrs(props => ({
   type: 'submit',
   disabled: props.loading,
 }))`
-  background-color: #1f2833;
+  background-color: #a4a71e;
   border: 0;
   padding: 0 15px;
   margin-left: 10px;
   border-radius: 4px;
-  color: #66fcf1;
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
